@@ -10,7 +10,7 @@ export const AppProvider = ({ children }) => {
     gender: 'Male',
     degree: 'B.Tech Computer Science',
     experience: '2',
-    skills: 'React, Node.js, JavaScript, Tailwind CSS',
+    skills: ['React', 'Node.js', 'JavaScript', 'Tailwind CSS'],
     achievements: 'Won 2 Hackathons, Certified AWS Cloud Practitioner',
     positions: 'Lead Developer at College Tech Club'
   });

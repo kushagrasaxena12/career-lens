@@ -1,8 +1,93 @@
 @import "tailwindcss";
 
+@theme {
+  --color-background: #0B0D13;
+  --color-foreground: #F8FAFC;
+
+  /* Gemini Palette */
+  --color-gemini-blue: #4285F4;
+  --color-gemini-purple: #7C3AED;
+  --color-gemini-teal: #10B981;
+  --color-gemini-pink: #A855F7;
+  --color-electric-cyan: #06B6D4;
+  --color-glowing-purple: #818CF8;
+  --color-muted-orange: #F97316;
+
+  --color-primary: var(--color-glowing-purple);
+  --color-secondary: #1E293B;
+  --color-accent: var(--color-electric-cyan);
+  --color-border: rgba(255, 255, 255, 0.1);
+}
+
+:root {
+  --background: #0B0D13;
+  --foreground: #F8FAFC;
+}
+
 body {
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+}
+
+/* Aurora Background Animation */
+@keyframes aura-pulse {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.15;
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+    opacity: 0.2;
+  }
+  66% {
+    transform: translate(-20px, 40px) scale(0.9);
+    opacity: 0.1;
+  }
+}
+
+.aurora-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: -1;
+  pointer-events: none;
+  animation: aura-pulse 15s infinite ease-in-out;
+}
+
+.glass {
+  background: rgba(15, 16, 21, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.glass:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: scale(1.01);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.1);
+}
+
+.text-tracking-widest {
+  letter-spacing: 0.2em;
+}
+
+.glow-border {
+  position: relative;
+}
+
+.glow-border::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(45deg, var(--color-electric-cyan), var(--color-glowing-purple), var(--color-gemini-pink));
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0.3;
 }
