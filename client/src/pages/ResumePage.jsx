@@ -11,38 +11,64 @@ const ResumePage = ({ user }) => {
   const handleUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
+  
     if (resumes.length >= 3) {
       alert('Maximum of 3 resumes allowed. Please delete one first.');
       return;
     }
-
+  
     setIsUploading(true);
-    setUploadProgress(0);
-
-    // Simulate upload and parsing progress
-    const interval = setInterval(() => {
-      setUploadProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        return prev + 5;
+    setUploadProgress(10);
+  
+    try {
+      const formData = new FormData();
+      formData.append('resume', file);
+  
+      setUploadProgress(30);
+  
+      const response = await fetch('/api/resumes/upload', {
+        method: 'POST',
+        headers: {
+          'x-user-id': '1'
+        },
+        body: formData
       });
-    }, 100);
-
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    const newResume = {
-      id: Date.now(),
-      name: file.name,
-      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-      isActive: resumes.length === 0,
-    };
-
-    setResumes([...resumes, newResume]);
-    setIsUploading(false);
-    setUploadProgress(0);
+  
+      setUploadProgress(70);
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to upload resume');
+      }
+  
+      const data = await response.json();
+  
+      setUploadProgress(100);
+  
+      const resume = data.resume;
+  
+      const newResume = {
+        id: resume.id,
+        name: resume.fileName,
+        date: new Date(resume.createdAt || Date.now()).toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric'
+        }),
+        isActive: resume.isActive,
+        fileUrl: resume.fileUrl,
+        extractedText: resume.extractedText
+      };
+  
+      setResumes(prev => [...prev, newResume]);
+    } catch (error) {
+      console.error('Resume upload failed:', error);
+      alert(error.message || 'Failed to upload resume');
+    } finally {
+      setIsUploading(false);
+      setUploadProgress(0);
+      e.target.value = '';
+    }
   };
 
   const handleSetActive = (id) => {

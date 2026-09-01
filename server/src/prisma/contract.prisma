@@ -1,0 +1,131 @@
+// use prisma-next
+
+model User {
+  id           Int               @id @default(autoincrement())
+  email        String            @unique
+  passwordHash String
+  createdAt    TimestamptzString @default(now())
+  updatedAt    temporal.updatedAtString()
+
+  profile      CandidateProfile?
+}
+
+model CandidateProfile {
+  id           Int               @id @default(autoincrement())
+  userId       Int               @unique
+  firstName    String
+  lastName     String
+  phone        String?
+  gender       String?
+  location     String?
+  headline     String?
+  summary      String?
+  createdAt    TimestamptzString @default(now())
+  updatedAt    temporal.updatedAtString()
+
+  user         User              @relation(fields: [userId], references: [id])
+  skills       CandidateSkill[]
+  education    Education[]
+  experiences  Experience[]
+  achievements Achievement[]
+  positions    Position[]
+  resumes      Resume[]
+}
+
+model Skill {
+  id          Int               @id @default(autoincrement())
+  name        String            @unique
+  createdAt   TimestamptzString @default(now())
+
+  candidates  CandidateSkill[]
+}
+
+model CandidateSkill {
+  id           Int              @id @default(autoincrement())
+  candidateId  Int
+  skillId      Int
+  proficiency  String?
+
+  candidate    CandidateProfile @relation(fields: [candidateId], references: [id])
+  skill        Skill             @relation(fields: [skillId], references: [id])
+
+  @@unique([candidateId, skillId])
+}
+
+model Education {
+  id            Int               @id @default(autoincrement())
+  candidateId   Int
+  degree        String
+  fieldOfStudy  String?
+  institution   String?
+  startDate     DateTime?
+  endDate       DateTime?
+  grade         String?
+  description   String?
+
+  candidate     CandidateProfile  @relation(fields: [candidateId], references: [id])
+}
+
+model Experience {
+  id              Int               @id @default(autoincrement())
+  candidateId     Int
+  company         String
+  jobTitle        String
+  employmentType  String?
+  location        String?
+  startDate       DateTime
+  endDate         DateTime?
+  description     String?
+
+  candidate       CandidateProfile  @relation(fields: [candidateId], references: [id])
+}
+
+model Achievement {
+  id           Int               @id @default(autoincrement())
+  candidateId  Int
+  title        String
+  description  String?
+  date         DateTime?
+
+  candidate    CandidateProfile @relation(fields: [candidateId], references: [id])
+}
+
+model Position {
+  id           Int               @id @default(autoincrement())
+  candidateId  Int
+  title        String
+  organization String?
+  description  String?
+  startDate    DateTime?
+  endDate      DateTime?
+
+  candidate    CandidateProfile @relation(fields: [candidateId], references: [id])
+}
+
+model Resume {
+  id            Int               @id @default(autoincrement())
+  candidateId   Int
+  fileName      String
+  fileUrl       String
+  fileType      String?
+  fileSize      Int?
+  extractedText String?
+  isActive      Boolean           @default(false)
+  createdAt     TimestamptzString  @default(now())
+  updatedAt     temporal.updatedAtString()
+
+  candidate     CandidateProfile  @relation(fields: [candidateId], references: [id])
+  analyses      ResumeAnalysis[]
+}
+
+model ResumeAnalysis {
+  id           Int               @id @default(autoincrement())
+  resumeId     Int
+  jdText       String
+  overallScore Float?
+  summary      String?
+  analysisJson Json
+  createdAt    TimestamptzString @default(now())
+
+  resume       Resume            @relation(fields: [resumeId], references: [id])
+}

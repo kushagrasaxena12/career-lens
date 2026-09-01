@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const AppContext = createContext();
 
@@ -15,10 +15,43 @@ export const AppProvider = ({ children }) => {
     positions: 'Lead Developer at College Tech Club'
   });
 
-  const [resumes, setResumes] = useState([
-    { id: 1, name: 'Resume_Final_v1.pdf', date: '2026-08-01', isActive: true },
-    { id: 2, name: 'Resume_Experience_v2.pdf', date: '2026-08-15', isActive: false },
-  ]);
+  const [resumes, setResumes] = useState([]);
+  const fetchResumes = async () => {
+    try {
+      const response = await fetch('/api/resumes', {
+        headers: {
+          'x-user-id': '1'
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to fetch resumes');
+      }
+  
+      const data = await response.json();
+  
+      const formattedResumes = data.resumes.map(resume => ({
+        id: resume.id,
+        name: resume.fileName,
+        date: new Date(resume.createdAt).toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric'
+        }),
+        isActive: resume.isActive,
+        fileUrl: resume.fileUrl,
+        extractedText: resume.extractedText
+      }));
+  
+      setResumes(formattedResumes);
+    } catch (error) {
+      console.error('Failed to fetch resumes:', error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchResumes();
+  }, []);
 
   const [jd, setJd] = useState({
     content: '',
