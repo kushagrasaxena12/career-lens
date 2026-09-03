@@ -3,22 +3,9 @@ import React, { createContext, useContext, useState } from 'react';
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  const [profile, setProfile] = useState({
-    firstName: 'Lakshit',
-    lastName: 'Barak',
-    email: 'lakshit@example.com',
-    gender: 'Male',
-    degree: 'B.Tech Computer Science',
-    experience: '2',
-    skills: ['React', 'Node.js', 'JavaScript', 'Tailwind CSS'],
-    achievements: 'Won 2 Hackathons, Certified AWS Cloud Practitioner',
-    positions: 'Lead Developer at College Tech Club'
-  });
+  const [profile, setProfile] = useState(null);
 
-  const [resumes, setResumes] = useState([
-    { id: 1, name: 'Resume_Final_v1.pdf', date: '2026-08-01', isActive: true },
-    { id: 2, name: 'Resume_Experience_v2.pdf', date: '2026-08-15', isActive: false },
-  ]);
+  const [resumes, setResumes] = useState([]);
 
   const [jd, setJd] = useState({
     content: '',
@@ -41,22 +28,23 @@ export const AppProvider = ({ children }) => {
     }
 
     setLoading(true);
-    // Simulate AI Analysis
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    try {
+      // TODO: Implement real AI Analysis API call
+      // const response = await fetch('/api/analyze', {
+      //   method: 'POST',
+      //   body: JSON.stringify({ resumeId: activeResumeId, jd: jd.content })
+      // });
+      // const data = await response.json();
+      // setAnalysis(data);
 
-    setAnalysis({
-      overallScore: Math.floor(Math.random() * 40) + 60,
-      strongSkills: ['React', 'JavaScript', 'Tailwind CSS', 'API Integration'],
-      missingSkills: ['Redis', 'Docker', 'Kubernetes', 'Unit Testing'],
-      keywords: ['Scalability', 'Microservices', 'CI/CD Pipeline', 'Performance Optimization'],
-      recommendations: [
-        "Add more quantified achievements to your experience section.",
-        "Incorporate keywords like 'Microservices' into your projects.",
-        "Mention specific tools used for state management (e.g., Redux, Zustand).",
-        "Highlight any experience with cloud deployment (AWS/Azure/GCP)."
-      ]
-    });
-    setLoading(false);
+      // For now, we leave it as a placeholder to be filled by the backend integration
+      throw new Error("API integration pending");
+    } catch (error) {
+      console.error("Analysis failed:", error);
+      alert("AI Analysis is currently unavailable. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

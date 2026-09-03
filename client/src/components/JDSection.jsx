@@ -48,7 +48,7 @@ const JDSection = ({ jd, onUpdate }) => {
               value={formData.location}
               onChange={handleChange}
               className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400"
-              placeholder="e.g. New York, NY"
+              placeholder="e.g. New York, Delhi"
             />
           </div>
         </div>

@@ -19,11 +19,13 @@ const LoginPage = ({ onLogin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onLogin({ firstName: 'Lakshit', lastName: 'Barak', email });
+    // In a real app, this would be an API call to /api/login
+    onLogin({ firstName: 'Demo', lastName: 'User', email });
     navigate('/dashboard');
   };
 
   const handleGoogleLogin = () => {
+    // In a real app, this would be a Google OAuth flow
     onLogin({ firstName: 'Google', lastName: 'User', email: 'google@example.com' });
     navigate('/dashboard');
   };

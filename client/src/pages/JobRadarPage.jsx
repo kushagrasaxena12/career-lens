@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useApp } from '../context/AppContext';
 import { Search, Filter, MapPin, Briefcase, ExternalLink, Sparkles } from 'lucide-react';
@@ -63,11 +63,36 @@ const JobCard = ({ job }) => (
 
 const JobRadarPage = () => {
   const [filter, setFilter] = useState('All');
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
   const modes = ['All', 'Remote', 'Hybrid', 'On-site'];
 
+  useEffect(() => {
+    const fetchJobs = async () => {
+      setLoading(true);
+      try {
+        if (import.meta.env.VITE_USE_MOCK_JOBS === 'true') {
+          setJobs(JOB_MOCKS);
+        } else {
+          // TODO: Implement real API call to /api/jobs
+          // const response = await fetch('/api/jobs');
+          // const data = await response.json();
+          // setJobs(data);
+          setJobs([]); // Default to empty for now
+        }
+      } catch (error) {
+        console.error("Failed to fetch jobs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, []);
+
   const filteredJobs = filter === 'All'
-    ? JOB_MOCKS
-    : JOB_MOCKS.filter(job => job.mode === filter);
+    ? jobs
+    : jobs.filter(job => job.mode === filter);
 
   return (
     <motion.div
@@ -103,11 +128,28 @@ const JobRadarPage = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredJobs.map(job => (
-          <JobCard key={job.id} job={job} />
-        ))}
-      </div>
+      {loading ? (
+        <div className="h-64 flex flex-col items-center justify-center text-center glass rounded-3xl border border-white/10">
+          <div className="w-12 h-12 rounded-full border-4 border-indigo-500/20 border-t-indigo-500 animate-spin mb-4" />
+          <p className="text-zinc-400">Scanning the job market...</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredJobs.length === 0 ? (
+            <div className="col-span-full p-12 text-center glass rounded-3xl border border-dashed border-white/10 flex flex-col items-center justify-center space-y-4">
+              <div className="w-16 h-16 rounded-full bg-indigo-500/20 flex items-center justify-center mb-2 text-indigo-400 animate-pulse">
+                <Sparkles size={32} />
+              </div>
+              <h3 className="text-2xl font-black text-white tracking-tight">Integrating Soon</h3>
+              <p className="text-zinc-500 max-w-xs mx-auto">We're currently building the job aggregation engine to bring you the best matched opportunities.</p>
+            </div>
+          ) : (
+            filteredJobs.map(job => (
+              <JobCard key={job.id} job={job} />
+            ))
+          )}
+        </div>
+      )}
     </motion.div>
   );
 };

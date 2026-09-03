@@ -41,7 +41,7 @@ const DashboardPage = ({ user }) => {
             <span className="p-2 bg-indigo-500/20 text-indigo-400 rounded-xl border border-indigo-500/30">
               <LayoutDashboard size={32} />
             </span>
-            Welcome back, {profile.firstName}!
+            Welcome back, {profile?.firstName || 'Candidate'}!
           </h1>
           <p className="text-zinc-400 text-lg max-w-2xl">
             Your career trajectory is looking sharp. Here's a snapshot of your AI-powered insights.
@@ -62,25 +62,25 @@ const DashboardPage = ({ user }) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           label="Resume Score"
-          value="84%"
+          value={analyses.length > 0 ? `${analyses[0].score}%` : '--'}
           icon={Target}
           color="bg-cyan-500"
         />
         <StatCard
           label="JDs Analyzed"
-          value={analyses.length || 12}
+          value={analyses.length}
           icon={FileText}
           color="bg-indigo-500"
         />
         <StatCard
           label="Profile Completeness"
-          value="92%"
+          value="--%"
           icon={User}
           color="bg-violet-500"
         />
         <StatCard
           label="Match Trend"
-          value="+12%"
+          value="--"
           icon={TrendingUp}
           color="bg-emerald-500"
         />
@@ -100,11 +100,7 @@ const DashboardPage = ({ user }) => {
           </div>
 
           <div className="space-y-4">
-            {(analyses.length > 0 ? analyses : [
-              { id: 1, jobTitle: 'Frontend Engineer', company: 'Google', score: 84, date: '2 days ago' },
-              { id: 2, jobTitle: 'Product Designer', company: 'Airbnb', score: 72, date: '1 week ago' },
-              { id: 3, jobTitle: 'Fullstack Developer', company: 'Meta', score: 91, date: '2 weeks ago' },
-            ]).map((analysis, index) => (
+            {analyses.length > 0 ? analyses.map((analysis, index) => (
               <motion.div
                 key={analysis.id}
                 whileHover={{ x: 10 }}
@@ -131,7 +127,11 @@ const DashboardPage = ({ user }) => {
                   </div>
                 </div>
               </motion.div>
-            ))}
+            )) : (
+              <div className="p-8 text-center glass rounded-2xl border border-dashed border-white/10">
+                <p className="text-zinc-500 text-sm">No recent analyses found. Start by matching your resume!</p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -145,11 +145,11 @@ const DashboardPage = ({ user }) => {
             <div className="space-y-4">
               <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/10">
                 <span className="text-zinc-500 text-xs font-medium">Experience</span>
-                <span className="text-white text-sm font-bold">{profile.experience} Years</span>
+                <span className="text-white text-sm font-bold">{profile?.experience || '--'} Years</span>
               </div>
               <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/10">
                 <span className="text-zinc-500 text-xs font-medium">Education</span>
-                <span className="text-white text-sm font-bold truncate ml-2">{profile.degree}</span>
+                <span className="text-white text-sm font-bold truncate ml-2">{profile?.degree || '--'}</span>
               </div>
               <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/10">
                 <span className="text-zinc-500 text-xs font-medium">Status</span>
