@@ -4,18 +4,33 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "contract:emit": "prisma contract emit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@google/genai": "^2.20.0",
+    "@prisma/client": "^7.10.0",
+    "@prisma/orm-postgres": "^8.0.0-rc.8",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "multer": "^2.3.0",
+    "pdf-parse": "^2.4.5"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "@prisma/cli-engine": "^0.2.3",
+    "@types/bcrypt": "^6.0.0",
+    "@types/multer": "^2.2.0",
+    "@types/node": "^26.4.0",
+    "@types/pdf-parse": "^1.1.5",
+    "nodemon": "^3.1.14",
+    "prisma": "^8.0.0-rc.10",
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.3"
   }
 }
