@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mic, Video, MessageSquare, TrendingUp, BarChart3, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Mic, Video, MessageSquare, TrendingUp, BarChart3, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 
 const InterviewPage = () => {
   const [stage, setStage] = useState('setup'); // setup, interviewing, result
@@ -190,18 +190,18 @@ const InterviewPage = () => {
                       cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="8"
                       strokeDasharray="282.7"
                       initial={{ strokeDashoffset: 282.7 }}
-                      animate={{ strokeDashoffset: 282.7 - (282.7 * 78) / 100 }}
+                      animate={{ strokeDashoffset: 282.7 - (282.7 * 0) / 100 }}
                       transition={{ duration: 1, ease: "easeOut" }}
                       strokeLinecap="round"
                       className="text-emerald-400"
                     />
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-3xl font-black text-white">78%</span>
+                    <span className="text-3xl font-black text-white">--%</span>
                   </div>
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">Overall Performance</h3>
-                <p className="text-zinc-500 text-sm">You demonstrated strong technical depth, but could improve in structured storytelling.</p>
+                <p className="text-zinc-500 text-sm">Analysis pending. Please complete an interview session to see your results.</p>
               </div>
 
               {/* Metrics Radar/Chart Placeholder */}
@@ -211,23 +211,17 @@ const InterviewPage = () => {
                   Competency Breakdown
                 </h3>
                 <div className="space-y-6">
-                  {[
-                    { label: 'Technical Depth', score: 90, color: 'bg-cyan-500' },
-                    { label: 'Communication', score: 65, color: 'bg-indigo-500' },
-                    { label: 'Problem Solving', score: 82, color: 'bg-violet-500' },
-                    { label: 'Cultural Fit', score: 70, color: 'bg-fuchsia-500' },
-                  ].map(metric => (
-                    <div key={metric.label} className="space-y-2">
+                  {['Technical Depth', 'Communication', 'Problem Solving', 'Cultural Fit'].map(label => (
+                    <div key={label} className="space-y-2">
                       <div className="flex justify-between text-sm font-medium">
-                        <span className="text-zinc-300">{metric.label}</span>
-                        <span className="text-white">{metric.score}%</span>
+                        <span className="text-zinc-300">{label}</span>
+                        <span className="text-white">--%</span>
                       </div>
                       <div className="h-2 w-full bg-zinc-800 rounded-full overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
-                          animate={{ width: `${metric.score}%` }}
-                          transition={{ duration: 1, delay: 0.2 }}
-                          className={`h-full ${metric.color}`}
+                          animate={{ width: 0 }}
+                          className={`h-full bg-indigo-500`}
                         />
                       </div>
                     </div>
@@ -249,9 +243,7 @@ const InterviewPage = () => {
                     Strengths
                   </h4>
                   <ul className="text-sm text-zinc-300 space-y-2">
-                    <li>• Detailed explanation of React reconciliation.</li>
-                    <li>• Clear understanding of system design patterns.</li>
-                    <li>• Confident delivery of technical answers.</li>
+                    <li className="text-zinc-500 italic">No data available yet.</li>
                   </ul>
                 </div>
                 <div className="p-6 rounded-2xl bg-rose-500/10 border border-rose-500/20 space-y-4">
@@ -260,9 +252,7 @@ const InterviewPage = () => {
                     Areas for Growth
                   </h4>
                   <ul className="text-sm text-zinc-300 space-y-2">
-                    <li>• Use the STAR method for behavioral questions.</li>
-                    <li>• Avoid over-explaining simple concepts.</li>
-                    <li>• Better alignment between technical solution and business value.</li>
+                    <li className="text-zinc-500 italic">No data available yet.</li>
                   </ul>
                 </div>
               </div>

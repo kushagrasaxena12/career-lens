@@ -104,10 +104,10 @@ const DashboardLayout = ({ user, onLogout }) => {
           {!isCollapsed && user && (
             <div className="mt-4 p-3 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-xs font-bold text-white shadow-lg shadow-indigo-500/20">
-                {user.firstName[0]}{user.lastName[0]}
+                {user.firstName?.[0] || 'U'}{user.lastName?.[0] || 'S'}
               </div>
               <div className="overflow-hidden">
-                <p className="text-xs font-bold text-white truncate">{user.firstName} {user.lastName}</p>
+                <p className="text-xs font-bold text-white truncate">{user.firstName || 'Demo'} {user.lastName || 'User'}</p>
                 <p className="text-[10px] text-zinc-500 truncate">{user.email}</p>
               </div>
             </div>

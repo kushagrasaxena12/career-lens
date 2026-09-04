@@ -14,9 +14,13 @@ const ResumeSection = ({ resumes, onUpload, onSetActive, onDelete }) => {
     }
 
     setUploading(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    onUpload(file);
-    setUploading(false);
+    try {
+      onUpload(file);
+    } catch (error) {
+      console.error("Upload failed:", error);
+    } finally {
+      setUploading(false);
+    }
   };
 
   return (

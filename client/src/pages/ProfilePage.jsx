@@ -21,18 +21,31 @@ const InputField = ({ label, value, onChange, placeholder, type = "text", icon: 
 
 const ProfilePage = ({ user }) => {
   const { profile, setProfile } = useApp();
-  const [formData, setFormData] = useState(profile);
+  const [formData, setFormData] = useState(profile || {
+    firstName: '',
+    lastName: '',
+    email: '',
+    gender: '',
+    degree: '',
+    experience: '',
+    skills: [],
+    achievements: '',
+    responsibility: ''
+  });
   const [isSaving, setIsSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
   const handleSave = async () => {
     setIsSaving(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setProfile(formData);
-    setIsSaving(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    try {
+      // TODO: Implement real API call to /api/profile/update
+      setProfile(formData);
+      setSaved(true);
+    } catch (error) {
+      console.error("Save failed:", error);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleAddSkill = (skill) => {

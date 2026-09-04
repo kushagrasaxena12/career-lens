@@ -18,6 +18,7 @@ const ResumePage = ({ user }) => {
     }
   
     setIsUploading(true);
+
     setUploadProgress(10);
   
     try {
@@ -68,6 +69,34 @@ const ResumePage = ({ user }) => {
       setIsUploading(false);
       setUploadProgress(0);
       e.target.value = '';
+
+    setUploadProgress(0);
+
+    try {
+      // TODO: Implement real API call to /api/resumes/upload
+      // const formData = new FormData();
+      // formData.append('file', file);
+      // const response = await fetch('/api/resumes/upload', { method: 'POST', body: formData });
+      // const data = await response.json();
+
+      // Placeholder for simulation:
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      const newResume = {
+        id: Date.now(),
+        name: file.name,
+        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+        isActive: resumes.length === 0,
+      };
+
+      setResumes([...resumes, newResume]);
+    } catch (error) {
+      console.error("Upload failed:", error);
+      alert("Failed to upload resume. Please try again.");
+    } finally {
+      setIsUploading(false);
+      setUploadProgress(0);
+
     }
   };
 
