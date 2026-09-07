@@ -62,15 +62,13 @@ const InterviewPage = () => {
               ))}
             </div>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={startInterview}
-              disabled={!selectedRole}
-              className="px-10 py-4 bg-white text-black rounded-full font-bold text-lg flex items-center gap-2 mx-auto disabled:opacity-50 transition-all"
-            >
-              Start Interview <ArrowRight size={20} />
-            </motion.button>
+            <div className="p-12 text-center glass rounded-3xl border border-dashed border-white/10 flex flex-col items-center justify-center space-y-4 max-w-2xl mx-auto mb-10">
+              <div className="w-16 h-16 rounded-full bg-indigo-500/20 flex items-center justify-center mb-2 text-indigo-400 animate-pulse">
+                <Sparkles size={32} />
+              </div>
+              <h3 className="text-2xl font-black text-white tracking-tight">Integrating Soon</h3>
+              <p className="text-zinc-500 max-w-xs mx-auto">We're currently building the AI-driven mock interview system to help you practice and perfect your responses.</p>
+            </div>
           </motion.div>
         )}
 
