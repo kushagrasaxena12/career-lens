@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mail, Lock, LogIn, UserPlus } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ChromeIcon = ({ size = 20, className = "" }) => (
@@ -12,7 +12,11 @@ const ChromeIcon = ({ size = 20, className = "" }) => (
 );
 
 const LoginPage = ({ onLogin }) => {
-  const [isSignup, setIsSignup] = useState(false);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const mode = queryParams.get('mode');
+
+  const [isSignup, setIsSignup] = useState(mode === 'signup');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();

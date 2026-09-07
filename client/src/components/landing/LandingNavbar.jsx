@@ -6,8 +6,6 @@ import { motion } from 'framer-motion';
 const LandingNavbar = () => {
   const navLinks = [
     { name: 'FEATURES', href: '#features' },
-    { name: 'PRICING', href: '#pricing' },
-    { name: 'RESOURCES', href: '#resources' },
   ];
 
   return (
@@ -35,13 +33,13 @@ const LandingNavbar = () => {
 
       <div className="flex items-center gap-6">
         <Link
-          to="/auth"
+          to="/auth?mode=login"
           className="text-[11px] font-bold text-zinc-400 hover:text-white transition-colors uppercase tracking-widest"
         >
           Sign In
         </Link>
         <Link
-          to="/auth"
+          to="/auth?mode=signup"
           className="group relative px-6 py-2 rounded-full text-[11px] font-black uppercase tracking-widest text-white transition-all hover:scale-105 active:scale-95 overflow-hidden shadow-[0_0_15px_rgba(124,58,237,0.3)]"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 transition-all group-hover:scale-110" />

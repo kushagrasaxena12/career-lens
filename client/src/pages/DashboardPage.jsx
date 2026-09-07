@@ -94,9 +94,6 @@ const DashboardPage = ({ user }) => {
               <Clock size={20} className="text-zinc-500" />
               Recent Analyses
             </h3>
-            <Link to="/analyze" className="text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
-              View all history →
-            </Link>
           </div>
 
           <div className="space-y-4">

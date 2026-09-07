@@ -27,7 +27,7 @@ const Hero = () => {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16">
             <Link
-              to="/dashboard/analyze"
+              to="/auth?mode=signup"
               className="group relative px-8 py-4 bg-white text-black rounded-full font-black text-sm uppercase tracking-widest transition-all hover:scale-105 active:scale-95 flex items-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.2)]"
             >
               <span>Get Started Free</span>
